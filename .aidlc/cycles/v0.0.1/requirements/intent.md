@@ -25,14 +25,15 @@ Ruby on Rails × ElasticSearch の連携実装を学びたい開発者
 ## 制約事項
 - 言語: Ruby
 - フレームワーク: Ruby on Rails 8.x
+- CSS: Tailwind CSS
 - データベース: MySQL
 - 検索エンジン: ElasticSearch
 - インフラ: アプリ・ElasticSearch・MySQL をすべて Docker で動かす（Docker Compose）
 
 ## 含まれるもの
 - 記事データの ElasticSearch へのインデックス登録
-- キーワードによる全文検索（Rails API）
-- 検索結果の表示（タイトル・本文抜粋・投稿日時）
+- キーワードによる全文検索（Rails、HTML ビューで結果表示）
+- 検索結果の表示（タイトル・本文抜粋・投稿日時、Tailwind CSS でスタイリング）
 - 開発環境用シードデータの作成
 - Docker Compose による開発環境構築
 

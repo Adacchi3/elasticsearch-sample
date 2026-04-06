@@ -1,0 +1,24 @@
+# 環境変数（機密情報）
+.env
+
+# Rails
+/.bundle
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/public/assets
+.byebug_history
+
+# Node
+/node_modules
+yarn-error.log
+
+# OS
+.DS_Store
+
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+
