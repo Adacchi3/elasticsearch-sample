@@ -66,5 +66,7 @@ end
 
 puts "Seeded #{articles.size} articles (#{created_count} created, #{articles.size - created_count} skipped)."
 
-# TODO: Unit 003 完了後にElasticSearchへのインデックス処理を追加
-# Article.import force: true
+puts "Reindexing articles into Elasticsearch..."
+Article.__elasticsearch__.create_index!(force: true)
+Article.__elasticsearch__.import
+puts "Elasticsearch indexing complete."
