@@ -56,7 +56,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSpec testing framework
-  gem "rspec-rails", "~> 7.0"
+  gem "rspec-rails", "~> 8.0"
 end
 
 group :development do
@@ -71,5 +71,5 @@ group :test do
 end
 
 # ElasticSearch
-gem "elasticsearch-model", "~> 7.2"
-gem "elasticsearch-rails", "~> 7.2"
+gem "elasticsearch-model", "~> 8.0"
+gem "elasticsearch-rails", "~> 8.0"
