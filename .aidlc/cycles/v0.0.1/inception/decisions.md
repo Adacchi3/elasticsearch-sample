@@ -57,3 +57,48 @@ Unit 002 の実装でモデルのユニットテストを作成する際、Rails
 ---
 
 <!-- 以降、DR-003, DR-004, ... と連番で追記 -->
+
+## DR-003: 検索ロジックの配置（Controller vs Model）
+
+- **ステップ**: Construction Phase / Unit 004 実装
+- **日時**: 2026-04-09
+
+### 背景
+
+全文検索の実装において、ElasticSearch クエリ実行・結果マッピング・body_excerpt 生成・日時フォーマットの責務をコントローラーに実装した。
+
+### 選択肢
+
+1. **Controller 直接実装**: 論理設計の当初方針。シンプルだが Controller が肥大化する
+2. **Model に集約（`search_by_keyword` メソッド）**: 検索ロジックをモデルに集約。Controller は薄く保つ
+
+### 決定
+
+**選択肢2（Model に集約）** を採用。
+
+### 理由
+
+MVC の原則に従い、ビジネスロジック（検索・変換）はモデルに置くべきとのユーザー指摘を受けて変更。テスト容易性も向上する（コントローラーを通さずモデル単体でテスト可能）。
+
+## DR-004: テスト環境のホスト認証設定
+
+- **ステップ**: Construction Phase / Unit 004 実装
+- **日時**: 2026-04-09
+
+### 背景
+
+Docker Compose 環境（`RAILS_ENV=development`）で RSpec を実行すると、`ActionDispatch::HostAuthorization` が `www.example.com` を拒否して全リクエストが 403 になった。
+
+### 選択肢
+
+1. **テストヘルパーで User-Agent を設定**: 根本解決にならない
+2. **`config.hosts = :all`**: Rails 8 では Symbol が許可ホストとして機能しない（バグ）
+3. **`config.middleware.delete ActionDispatch::HostAuthorization`**: テスト環境でミドルウェア自体を除去
+
+### 決定
+
+**選択肢3（ミドルウェア除去）** を採用。`config/environments/test.rb` に追記。
+
+### 理由
+
+`config.hosts = :all` が Rails 8.1.3 で意図通り動作しないことを確認。テスト環境でのホスト制限は不要なため、ミドルウェア削除が最もシンプルかつ確実。実行時は `RAILS_ENV=test` を明示して実行すること（Docker の環境変数が `development` のため `||=` では上書きされない）。
