@@ -7,10 +7,10 @@ class Article < ApplicationRecord
 
   index_name "articles"
 
-  settings do
+  settings index: { number_of_shards: 1 } do
     mappings dynamic: false do
-      indexes :title, type: :text
-      indexes :body, type: :text
+      indexes :title, type: :text, analyzer: "kuromoji"
+      indexes :body,  type: :text, analyzer: "kuromoji"
       indexes :published_at, type: :date
     end
   end
